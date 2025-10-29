@@ -1,0 +1,69 @@
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/fixer
+/catch
+.env
+.env.local
+.env.backup
+.env.production
+.env.testing
+nohup.out
+.phpunit.result.cache
+.php-cs-fixer.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+# Laravel缓存和日志文件
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+!/bootstrap/cache
+
+# 存储目录（保留public和.gitignore）
+/storage/app/*
+!/storage/app/public
+!/storage/app/.gitignore
+
+# 框架缓存
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+
+# 会话文件
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+
+# 测试文件
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+
+# 视图缓存
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+
+# 日志文件
+/storage/logs/*
+!/storage/logs/.gitignore
+*.log
+
+# IDE和编辑器配置
+/.fleet
+/.idea
+/.vscode
+.phpstorm.meta.php
+*.sublime-project
+*.sublime-workspace
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 模块目录（web前端）
+/web
+/node_modules
+
+# 其他
+composer.lock
