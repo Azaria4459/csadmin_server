@@ -1,0 +1,85 @@
+# 企业微信会话存档配置文件
+
+# 微信配置
+wechat:
+  corpid: "your-wechat-corpid"
+  secret: "your-wechat-secret"
+  privateKeyPath: "./keys/private_key.pem"
+  publickeyVer: 2
+  pullLimit: 100
+
+# 数据库配置
+database:
+  host: "172.17.14.95"
+  port: 3306
+  user: "cs_1"
+  password: "your-database-password"
+  name: "cs_1"
+
+# 日志配置
+log:
+  enable: true
+  level: info
+
+# 阿里云OSS配置（用于存储媒体文件）。请勿提交真实密钥，部署时用本地配置覆盖 accessKeyId/accessKeySecret
+oss:
+  enable: true
+  accessKeyId: "your-aliyun-access-key-id"
+  accessKeySecret: "your-aliyun-access-key-secret"
+  bucket: "vip-hk"
+  endpoint: "oss-cn-hongkong.aliyuncs.com"
+  domain: "https://img.flwvip.com"
+  directory: "csapi"
+
+# 音频转换配置（将 AMR 格式转换为 MP3）
+audio:
+  convertAmrToMp3: true
+  ffmpegPath: null  # null 或不设置则使用系统 PATH 中的 ffmpeg
+
+# 企业微信通讯录同步配置
+wechatSync:
+  enable: true
+  corpid: "your-wechat-corpid"
+  contactSecret: "your-wechat-contact-secret"  # 通讯录同步应用的secret
+  cronEmployee: "0 0 0 * * ?"  # 员工同步：每天0点执行
+  cronExternalContact: "0 30 0 * * ?"  # 外部联系人同步：每天0点30分执行
+
+# 飞书配置（用于发送提醒消息）
+feishu:
+  enable: true
+  host: "https://open.feishu.cn"
+  appId: "your-feishu-app-id"
+  appSecret: "your-feishu-app-secret"
+
+# AI 配置（用于情绪分析，支持 gemini 和 deepseek）
+ai:
+  enable: false  # 是否启用情绪分析功能：true-启用（定时任务和API接口都会工作），false-禁用（不进行情绪分析）
+  type: "deepseek"  # 可选值：gemini 或 deepseek
+  gemini:
+    apiKey: "your-gemini-api-key"
+  deepseek:
+    apiKey: "your-deepseek-api-key"
+
+# 云手机 ADB 微信发消息（automsg）配置：Java 直接调用 adb 命令，传入联系人和消息
+# 坐标与等待时间等仅在此处配置，修改后调用 POST /config/reload 即可生效
+automsg:
+  enable: true
+  adbPath: ""  # 可选，adb 可执行文件绝对路径，如 /usr/bin/adb；为空则使用 PATH 中的 adb（服务启动时 PATH 可能不含 adb，建议填写）
+  remoteAdb: "114.55.140.38:1000"
+  wechatPackage: "com.tencent.mm"
+  searchButtonX: 625
+  searchButtonY: 110
+  searchInputX: 360
+  searchInputY: 110
+  contactX: 280
+  contactY: 250
+  chatInputX: 250
+  chatInputY: 1150
+  sendButtonX: 660
+  sendButtonY: 1150
+  waitAfterLaunch: 5
+  waitAfterSearchTap: 3
+  waitAfterInputSearch: 3
+  waitAfterTapChat: 3
+  waitAfterInputMsg: 1
+  requestLogDir: "logs/automsg"  # 每次发送请求生成一个日志文件到此目录，为空则不写

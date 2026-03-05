@@ -1,0 +1,115 @@
+# 服务器部署文件清单
+
+## 必须上传的文件（最小部署包）
+
+### 1. 编译产物
+target/wechat-collector-jar-with-dependencies.jar
+
+### 2. 配置文件
+config/app.yml
+
+### 3. 启动脚本
+start.sh
+stop.sh
+
+### 4. Java SDK（企业微信SDK）
+java_sdk/libWeWorkFinanceSdk_Java.so
+java_sdk/wework-finance-sdk.jar
+java_sdk/com/tencent/wework/Finance.class
+java_sdk/com/tencent/wework/Finance.java
+
+### 5. 私钥文件（根据配置路径）
+keys/private_key_pkcs1.pem  （或 keys/private_key.pem，根据app.yml配置）
+
+### 6. SQL脚本（数据库初始化）
+sql/init.sql
+sql/add_sentiment_analysis_fields.sql  （如果数据库未执行）
+sql/add_intent_analysis_tables.sql     （如果数据库未执行）
+
+---
+
+## 完整目录结构（部署后）
+
+collect_server/
+├── config/
+│   └── app.yml
+├── java_sdk/
+│   ├── libWeWorkFinanceSdk_Java.so
+│   ├── wework-finance-sdk.jar
+│   └── com/tencent/wework/Finance.*
+├── keys/
+│   └── private_key_pkcs1.pem
+├── logs/                    # 自动创建，无需上传
+├── sql/
+│   └── *.sql
+├── start.sh
+├── stop.sh
+└── target/
+    └── wechat-collector-jar-with-dependencies.jar
+
+---
+
+## 快速打包命令
+
+在项目根目录执行：
+
+```bash
+# 1. 编译项目
+cd csadmin_server/collect_server
+mvn clean package
+
+# 2. 创建部署包
+mkdir -p deploy_package
+cp target/wechat-collector-jar-with-dependencies.jar deploy_package/
+cp -r config deploy_package/
+cp start.sh stop.sh deploy_package/
+cp -r java_sdk deploy_package/
+cp -r keys deploy_package/ 2>/dev/null || true
+cp -r sql deploy_package/
+
+# 3. 设置权限
+chmod +x deploy_package/*.sh
+chmod 600 deploy_package/keys/*.pem 2>/dev/null || true
+
+# 4. 打包
+cd deploy_package
+tar -czf ../collect_server_deploy.tar.gz .
+
+# 5. 上传到服务器
+# scp ../collect_server_deploy.tar.gz user@server:/path/to/
+```
+
+---
+
+## 服务器上解压和启动
+
+```bash
+# 1. 解压
+tar -xzf collect_server_deploy.tar.gz
+cd collect_server
+
+# 2. 修改配置（根据服务器环境）
+vi config/app.yml
+
+# 3. 执行数据库迁移（首次部署）
+mysql -u username -p database_name < sql/init.sql
+mysql -u username -p database_name < sql/add_sentiment_analysis_fields.sql
+mysql -u username -p database_name < sql/add_intent_analysis_tables.sql
+
+# 4. 启动服务
+./start.sh
+
+# 5. 查看日志
+tail -f logs/wechat-collector.log
+```
+
+---
+
+## 注意事项
+
+1. JAR文件：必须是 `jar-with-dependencies` 版本（包含所有依赖）
+2. Native库：`libWeWorkFinanceSdk_Java.so` 必须与服务器架构匹配（Linux x86_64）
+3. 配置文件：上传前修改 `app.yml` 中的数据库、API密钥等配置
+4. 私钥文件：确保文件权限为 600
+5. 启动脚本：确保有执行权限（chmod +x）
+

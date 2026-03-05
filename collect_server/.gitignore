@@ -1,0 +1,59 @@
+# Build artifacts
+/target/
+
+# Logs and runtime files
+/logs/
+*.log
+*.pid
+
+# OS / IDE files
+.DS_Store
+.idea/
+*.iml
+out/
+build/
+
+# Shell artifacts
+*.swp
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.classpath
+.project
+
+# Logs
+logs/
+*.log
+
+# Runtime
+*.pid
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config (keep template only)
+# config/app.yml
+
+# Private keys
+keys/
+*.pem
+
+# Compiled class files
+*.class
+

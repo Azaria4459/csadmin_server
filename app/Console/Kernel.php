@@ -15,7 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // 定时任务已迁移到 Java collect_server 项目
+        // $schedule->command('conversation:update-responsible-statistics')
+        //          ->dailyAt('02:00')
+        //          ->withoutOverlapping();
     }
 
     /**

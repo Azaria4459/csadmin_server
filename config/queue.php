@@ -36,7 +36,7 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => 'jobs',
+            'table' => 'queue_jobs',  // 使用 queue_jobs 避免与业务的 jobs 表冲突
             'queue' => 'default',
             'retry_after' => 90,
             'after_commit' => false,
@@ -87,7 +87,7 @@ return [
     'failed' => [
         'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
         'database' => env('DB_CONNECTION', 'mysql'),
-        'table' => 'failed_jobs',
+        'table' => 'queue_failed_jobs',  // 使用 queue_failed_jobs 避免与业务表冲突
     ],
 
 ];

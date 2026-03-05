@@ -19,7 +19,7 @@ trait UserRelations
      */
     public function initializeUserRelations(): void
     {
-        $this->isPermissionModuleEnabled = app(ModuleRepository::class)->enabled('permissions');
+        $this->isPermissionModuleEnabled = true;//app(ModuleRepository::class)->enabled('permissions');
 
         if ($this->isPermissionModuleEnabled) {
             $this->with = ['roles', 'jobs'];

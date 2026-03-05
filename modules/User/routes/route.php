@@ -17,5 +17,9 @@ Route::get('user/operate/log', [UserController::class, 'operateLog']);
 Route::get('user/operate/log', [UserController::class, 'operateLog']);
 Route::get('user/export', [UserController::class, 'export']);
 
+// 用户权限管理路由
+Route::get('users/{id}/managed-employees', [UserController::class, 'getManagedEmployees']);
+Route::post('users/{id}/managed-employees', [UserController::class, 'setManagedEmployees']);
+
 
 
